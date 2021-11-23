@@ -63,11 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = user.getText().toString();
                 String password = pass.getText().toString();
+
                 if (username.equals("")||password.equals("")){
                     Toast.makeText(LoginActivity.this, "Popunite sva polja", Toast.LENGTH_SHORT).show();
                 }
                 else {
-
 
                     Boolean checkuserpass = DB.checkusernamepassword(username, password);
                     if (checkuserpass == true) {
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                         int id = korisnik.getId();
                         if (korisnik.getUloga().equals("kupac")) {
                             Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao kupac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, RegisterBuyerActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
                             intent.putExtra("id", id);
                             SharedPreferences.Editor editor = getSharedPreferences("My pref", MODE_PRIVATE).edit();
                             editor.putString("userName", username);
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         } else if (korisnik.getUloga().equals("prodavac")) {
                             Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao prodavac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, RegisterSalesmanActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivityProdavac.class);
 
                             SharedPreferences.Editor editor = getSharedPreferences("My pref", MODE_PRIVATE).edit();
                             editor.putString("userName", username);

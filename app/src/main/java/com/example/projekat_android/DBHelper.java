@@ -8,6 +8,8 @@ import android.content.ContentValues;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
+import java.time.LocalDate;
+
 import model.Korisnik;
 import model.Kupac;
 import model.Prodavac;
@@ -71,6 +73,61 @@ public class DBHelper extends SQLiteOpenHelper {
         else{
             return null;
         }
+
+    }
+
+    public Boolean insertData(String ime, String prezime, String username, String password, String uloga){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ime", ime);
+        contentValues.put("prezime", prezime);
+        contentValues.put("username", username);
+        contentValues.put("password", password);
+        contentValues.put("uloga", uloga);
+
+        long result = MyDB.insert("users", null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
+
+    }
+
+    public Boolean insertKupci(String ime, String prezime, String username, String password){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ime", ime);
+        contentValues.put("prezime", prezime);
+        contentValues.put("username", username);
+        contentValues.put("password", password);
+
+        long result = MyDB.insert("kupci", null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
+
+    }
+
+    public Boolean checkusername(String username){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from users where username = ?", new String[] {username});
+        if(cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean insertProdavci(String ime, String prezime, String username, String password){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ime", ime);
+        contentValues.put("prezime", prezime);
+        contentValues.put("username", username);
+        contentValues.put("password", password);
+
+        long result = MyDB.insert("prodavci", null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
 
     }
 }
