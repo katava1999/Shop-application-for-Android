@@ -9,13 +9,17 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.Artikal;
 import model.Korisnik;
 import model.Kupac;
 import model.Prodavac;
 
 public class DBHelper extends SQLiteOpenHelper {
     private Context context;
+    List<Artikal> artikalList = new ArrayList<>();
     public static final String DATABASE_NAME = "Login.db";
 
     public DBHelper(Context context) {
@@ -28,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table users(id INTEGER PRIMARY KEY AUTOINCREMENT,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT, uloga TEXT)");
         MyDB.execSQL("create Table kupci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
         MyDB.execSQL("create Table prodavci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
+        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE)");
 
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','administrator')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','123','prodavac')");
@@ -36,6 +41,9 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("Insert into kupci(id,ime,prezime,username,password) VALUES (1,'stefan','stefanovic','stefans','123')");
 
         MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (1,'nenad','nenadovic','nenadn','523')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (1,'monitor','philips','331.21')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (2,'aaaaaa','asda','331.21')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (3,'qwd','asd','231.21')");
     }
 
     @Override
@@ -43,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists users");
         MyDB.execSQL("drop Table if exists kupci");
         MyDB.execSQL("drop Table if exists prodavci");
+        MyDB.execSQL("drop Table if exists artikli");
     }
 
     public Boolean checkusernamepassword(String username, String password) {
@@ -128,6 +137,25 @@ public class DBHelper extends SQLiteOpenHelper {
         if(result==-1) return false;
         else
             return true;
+
+    }
+
+    public List<Artikal> getArtikli(){
+        String sql = "select * from artikli ";
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        List<Artikal> artikli = new ArrayList<>();
+        Cursor cursor = MyDB.rawQuery(sql,null);
+        if(cursor.moveToFirst()){
+            do{
+                int id = Integer.parseInt(cursor.getString(0));
+                String naziv = cursor.getString(1);
+                String opis = cursor.getString(2);
+                Double cena = Double.parseDouble(cursor.getString(3));
+                artikli.add(new Artikal(id,naziv,opis,cena));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return artikli;
 
     }
 }
