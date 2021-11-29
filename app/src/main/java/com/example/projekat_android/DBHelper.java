@@ -32,7 +32,8 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table users(id INTEGER PRIMARY KEY AUTOINCREMENT,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT, uloga TEXT)");
         MyDB.execSQL("create Table kupci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
         MyDB.execSQL("create Table prodavci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
-        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE)");
+        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, prodavac_id INTEGER, FOREIGN KEY (prodavac_id) REFERENCES prodavci (id))");
+        MyDB.execSQL("create Table stavke(id INTEGER PRIMARY KEY, kolicina INTEGER, artikal_id INTEGER, FOREIGN KEY(artikal_id) REFERENCES artikli(id))");
 
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','administrator')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','123','prodavac')");
@@ -41,9 +42,14 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("Insert into kupci(id,ime,prezime,username,password) VALUES (1,'stefan','stefanovic','stefans','123')");
 
         MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (1,'nenad','nenadovic','nenadn','523')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (1,'monitor','philips','331.21')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (2,'aaaaaa','asda','331.21')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena) VALUES (3,'qwd','asd','231.21')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (2,'marko','markovic','markom','123')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'stefan','markovic','steva','123')");
+
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (1,'monitor','philips','331.21',2)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (2,'dsa','dasd','331.21',3)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (3,'monitor','philips','331.21',1)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (4,'lenovo','G500dfdfdfdfdfdfsfsdfsdfasdfasdfasdfasdfasdgasdgasdgasdgasdgasdfasdfasdfasdfasdfasdfasdfasdfasdbasbvasdgvasdvasdvasdvasdvasdvbasdfbasdfbasdfbasdbasdfbasdfbafbadsfbadfbadfbadsfbafd','31.21',1)");
+
     }
 
     @Override
@@ -52,6 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists kupci");
         MyDB.execSQL("drop Table if exists prodavci");
         MyDB.execSQL("drop Table if exists artikli");
+        MyDB.execSQL("drop Table if exists stavke");
     }
 
     public Boolean checkusernamepassword(String username, String password) {
