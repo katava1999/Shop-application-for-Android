@@ -15,7 +15,9 @@ import java.util.List;
 import model.Artikal;
 import model.Korisnik;
 import model.Kupac;
+import model.Porudzbina;
 import model.Prodavac;
+import model.Stavka;
 
 public class DBHelper extends SQLiteOpenHelper {
     private Context context;
@@ -34,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table prodavci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
         MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, prodavac_id INTEGER, FOREIGN KEY (prodavac_id) REFERENCES prodavci (id))");
         MyDB.execSQL("create Table stavke(id INTEGER PRIMARY KEY, kolicina INTEGER, artikal_id INTEGER, FOREIGN KEY(artikal_id) REFERENCES artikli(id))");
+        MyDB.execSQL("create Table porudzbine(id INTEGER PRIMARY KEY AUTOINCREMENT, kupac_id INTEGER NOT NULL, stavka_id INTEGER NOT NULL, ukupno_cena REAL NOT NULL ,FOREIGN KEY(kupac_id) REFERENCES kupci(id),FOREIGN KEY(stavka_id) REFERENCES stavke(id))");
 
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','administrator')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','123','prodavac')");
@@ -59,6 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists prodavci");
         MyDB.execSQL("drop Table if exists artikli");
         MyDB.execSQL("drop Table if exists stavke");
+        MyDB.execSQL("drop Table if exists porudzbine");
     }
 
     public Boolean checkusernamepassword(String username, String password) {
@@ -165,4 +169,47 @@ public class DBHelper extends SQLiteOpenHelper {
         return artikli;
 
     }
+
+    public void insertStavke(Stavka stavka){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", stavka.getId());
+        contentValues.put("kolicina", stavka.getKolicina());
+        contentValues.put("artikal_id", stavka.getArtikal_id());
+
+        MyDB.insert("stavke", null, contentValues);
+    }
+
+    public Kupac findKupca(String username){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery("select * from kupci where username=?", new String[] {username});
+        if(cursor.getCount() == 1){
+            cursor.moveToFirst();
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String ime = cursor.getString(1);
+            String prezime = cursor.getString(2);
+            String usernamee = cursor.getString(3);
+            String password = cursor.getString(4);
+
+            Kupac kupac = new Kupac(id,ime,prezime,username,password);
+
+            return kupac;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public void insertPorudzbinu(Porudzbina porudzbina){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("kupac_id", porudzbina.getKupac_id());
+        contentValues.put("stavka_id", porudzbina.getStavka_id());
+        contentValues.put("ukupno_cena", porudzbina.getUkupno_cena());
+
+
+        MyDB.insert("porudzbine", null, contentValues);
+
+    }
+
 }

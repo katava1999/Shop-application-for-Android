@@ -3,9 +3,11 @@ package adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.LocusId;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projekat_android.DBHelper;
 import com.example.projekat_android.LoginActivity;
 import com.example.projekat_android.MainActivityKupac;
 import com.example.projekat_android.OpisArtiklaActivity;
@@ -21,11 +24,15 @@ import com.example.projekat_android.R;
 import java.util.List;
 
 import model.Artikal;
+import model.Kupac;
+import model.Porudzbina;
+import model.Stavka;
 
 public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHolder> {
     Context context;
     List<Artikal> artikalList;
     RecyclerView recyclerV;
+    DBHelper DB;
 
     final View.OnClickListener onClickListener = new MyOnClickListner();
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -34,6 +41,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
         TextView rowOpis;
         TextView rowCena;
         EditText rowKolicina;
+        Button rowNaruci;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +50,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
             rowOpis = itemView.findViewById(R.id.item_description);
             rowCena = itemView.findViewById(R.id.item_price);
             rowKolicina = itemView.findViewById(R.id.inputKolicina);
+            rowNaruci = itemView.findViewById(R.id.btnNaruci);
         }
     }
 
@@ -64,6 +73,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ArtikalAdapter.ViewHolder holder, int position) {
         final Artikal artikal = artikalList.get(position);
+        DB = new DBHelper(context);
         //holder.rowId.setText(""+artikal.getId());
         holder.rowNaziv.setText("Naziv: "+artikal.getNaziv());
         holder.rowOpis.setText("Kliknite za detalje o artiklu");
@@ -81,6 +91,37 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
             }
         });
 
+        holder.rowNaruci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int artikal_id = artikal.getId();
+                if (holder.rowKolicina.getText().toString().equals("")){
+                    Toast.makeText(v.getContext(), "Morate uneti kolicinu", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    int kolicina = Integer.valueOf(holder.rowKolicina.getText().toString());
+
+                    int idStavke = hashCode();
+                    Stavka stavka = new Stavka(idStavke, kolicina, artikal_id);
+                    int stavkaId = stavka.getId();
+                    DB.insertStavke(stavka);
+
+                    SharedPreferences sharedPref = context.getSharedPreferences("My pref", Context.MODE_PRIVATE);
+                    String usernameKupca = sharedPref.getString("userName", "No name defined");
+                    Kupac kupac = DB.findKupca(usernameKupca);
+                    int idKupca = kupac.getId();
+
+                    double cena = artikal.getCena() * kolicina;
+                    Porudzbina porudzbina = new Porudzbina(idKupca, idStavke, cena);
+                    DB.insertPorudzbinu(porudzbina);
+
+                    Toast.makeText(v.getContext(), "Ukupna cena za narucen proizvod je: "+ cena, Toast.LENGTH_SHORT).show();
+                    holder.rowKolicina.setText("");
+
+                }
+            }
+        });
     }
 
     @Override
