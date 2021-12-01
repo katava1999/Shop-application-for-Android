@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.LocusId;
 import android.content.SharedPreferences;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
     List<Artikal> artikalFull;
     RecyclerView recyclerV;
     DBHelper DB;
+    TextView prikaz;
 
     final View.OnClickListener onClickListener = new MyOnClickListner();
 
@@ -47,6 +50,8 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
         TextView rowCena;
         EditText rowKolicina;
         Button rowNaruci;
+        TextView prikaz;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +61,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
             rowCena = itemView.findViewById(R.id.item_price);
             rowKolicina = itemView.findViewById(R.id.inputKolicina);
             rowNaruci = itemView.findViewById(R.id.btnNaruci);
+            prikaz = itemView.findViewById(R.id.zaPrikazCeneKupcu);
         }
     }
 
@@ -122,12 +128,34 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     Porudzbina porudzbina = new Porudzbina(idKupca, idStavke, cena);
                     DB.insertPorudzbinu(porudzbina);
 
-                    Toast.makeText(v.getContext(), "Ukupna cena za narucen proizvod je: "+ cena, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Uspesno ste izvrsili kupovinu za "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
                     holder.rowKolicina.setText("");
 
                 }
             }
         });
+
+        holder.rowKolicina.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!holder.rowKolicina.getText().toString().equalsIgnoreCase("")){
+                    int kolicina = Integer.valueOf(holder.rowKolicina.getText().toString());
+                    double cena = artikal.getCena() * kolicina;
+                    String pr = String.valueOf(cena);
+                    holder.prikaz.setText("Ukupna cena nakon unete kolicine: " + pr);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -150,4 +178,5 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
 
         }
     }
+
 }

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
          */
+        user.addTextChangedListener(loginTextWather);
+        pass.addTextChangedListener(loginTextWather);
 
         DB=new DBHelper(this);
 
@@ -118,6 +122,25 @@ public class LoginActivity extends AppCompatActivity {
 
         });
     }
+    private TextWatcher loginTextWather = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String usenameInput = user.getText().toString().trim();
+            String passwordInput = pass.getText().toString().trim();
+
+            login.setEnabled(!usenameInput.isEmpty() && !passwordInput.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
 
 
