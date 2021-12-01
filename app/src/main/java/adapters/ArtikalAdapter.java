@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.example.projekat_android.MainActivityKupac;
 import com.example.projekat_android.OpisArtiklaActivity;
 import com.example.projekat_android.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Artikal;
@@ -31,10 +34,12 @@ import model.Stavka;
 public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHolder> {
     Context context;
     List<Artikal> artikalList;
+    List<Artikal> artikalFull;
     RecyclerView recyclerV;
     DBHelper DB;
 
     final View.OnClickListener onClickListener = new MyOnClickListner();
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView rowId;
         TextView rowNaziv;
@@ -57,6 +62,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
     public ArtikalAdapter(Context context, List<Artikal> artikalList, RecyclerView recyclerV){
             this.context = context;
             this.artikalList = artikalList;
+            this.artikalFull = new ArrayList<>(artikalList);
             this.recyclerV = recyclerV;
     }
 
@@ -129,7 +135,11 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
         return artikalList.size();
     }
 
+    public void filteredList(ArrayList<Artikal> filterList) {
+        artikalList = filterList;
+        notifyDataSetChanged();
 
+    }
 
     private class MyOnClickListner implements View.OnClickListener {
         @Override

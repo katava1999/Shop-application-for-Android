@@ -49,13 +49,4 @@ public class Porudzbina {
     public void setUkupno_cena(double ukupno_cena) {
         this.ukupno_cena = ukupno_cena;
     }
-
-    @Override
-    public String toString() {
-        return "Porudzbina{" +
-                "id=" + id +
-                ", kupac_id=" + kupac_id +
-                ", stavka_id=" + stavka_id +
-                '}';
-    }
 }
