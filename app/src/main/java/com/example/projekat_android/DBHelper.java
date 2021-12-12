@@ -34,26 +34,28 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table users(id INTEGER PRIMARY KEY AUTOINCREMENT,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT, uloga TEXT)");
         MyDB.execSQL("create Table kupci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
         MyDB.execSQL("create Table prodavci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
-        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, prodavac_id INTEGER, FOREIGN KEY (prodavac_id) REFERENCES prodavci (id))");
+        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, prodavac_id INTEGER, FOREIGN KEY (prodavac_id) REFERENCES prodavci(id))");
         MyDB.execSQL("create Table stavke(id INTEGER PRIMARY KEY, kolicina INTEGER, artikal_id INTEGER, FOREIGN KEY(artikal_id) REFERENCES artikli(id))");
         MyDB.execSQL("create Table porudzbine(id INTEGER PRIMARY KEY AUTOINCREMENT, kupac_id INTEGER NOT NULL, stavka_id INTEGER NOT NULL, ukupno_cena REAL NOT NULL ,FOREIGN KEY(kupac_id) REFERENCES kupci(id),FOREIGN KEY(stavka_id) REFERENCES stavke(id))");
 
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','administrator')");
-        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','123','prodavac')");
+        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','523','prodavac')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (3,'stefan','stefanovic','stefans','123','kupac')");
+        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (4,'marko','markovic','markom','123','prodavac')");
+        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (5,'marko','markovic','steva','123','prodavac')");
 
         MyDB.execSQL("Insert into kupci(id,ime,prezime,username,password) VALUES (1,'stefan','stefanovic','stefans','123')");
 
         MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (1,'nenad','nenadovic','nenadn','523')");
         MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (2,'marko','markovic','markom','123')");
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'stefan','markovic','steva','123')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'marko','markovic','steva','123')");
 
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (1,'monitor','philips','331.21',2)");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (2,'dsa','dasd','331.21',3)");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (3,'monitor','philips','331.21',1)");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena, prodavac_id) VALUES (4,'lenovo','G500dfdfdfdfdfdfsfsdfsdfasdfasdfasdfasdfasdgasdgasdgasdgasdgasdfasdfasdfasdfasdfasdfasdfasdfasdbasbvasdgvasdvasdvasdvasdvasdvbasdfbasdfbasdfbasdbasdfbasdfbafbadsfbadfbadfbadsfbafd','31.21',1)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (1,'Philips','monitor','331.21','5')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (2,'Lenovo','laptop','140.32','4')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (3,'LG','televizor','45.32','4')");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (4,'Samsung A21s','mobilni telefon','560.42','4')");
 
-    }
+}
 
     @Override
     public void onUpgrade(SQLiteDatabase MyDB, int oldVersion, int newVersion) {
@@ -212,4 +214,32 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void updateArtikal(Artikal artikal){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("naziv", artikal.getNaziv());
+        contentValues.put("opis", artikal.getOpis());
+        contentValues.put("cena", artikal.getCena());
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.update("artikli",contentValues, "id = ?", new String[] {String.valueOf(artikal.getId())});
+
+    }
+
+    public List<Artikal> getArtikliProdavca(String prodavacId){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        List<Artikal> artikliList = new ArrayList<>();
+        Cursor cursor = MyDB.rawQuery("select * from artikli where prodavac_id=?", new String[] {prodavacId});
+        if(cursor.moveToFirst()){
+            do{
+                int id = Integer.parseInt(cursor.getString(0));
+                String naziv = cursor.getString(1);
+                String opis = cursor.getString(2);
+                Double cena = Double.parseDouble(cursor.getString(3));
+                Integer prodavac_id = cursor.getInt(4);
+                artikliList.add(new Artikal(id,naziv,opis,cena,prodavac_id));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return artikliList;
+
+    }
 }

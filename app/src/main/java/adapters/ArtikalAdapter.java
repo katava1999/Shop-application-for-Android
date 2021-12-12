@@ -36,7 +36,6 @@ import model.Stavka;
 public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHolder> {
     Context context;
     List<Artikal> artikalList;
-    List<Artikal> artikalFull;
     RecyclerView recyclerV;
     DBHelper DB;
     TextView prikaz;
@@ -68,7 +67,6 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
     public ArtikalAdapter(Context context, List<Artikal> artikalList, RecyclerView recyclerV){
             this.context = context;
             this.artikalList = artikalList;
-            this.artikalFull = new ArrayList<>(artikalList);
             this.recyclerV = recyclerV;
     }
 
@@ -130,6 +128,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
 
                     Toast.makeText(v.getContext(), "Uspesno ste izvrsili kupovinu za "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
                     holder.rowKolicina.setText("");
+                    holder.prikaz.setText("");
 
                 }
             }

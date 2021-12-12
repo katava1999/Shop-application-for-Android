@@ -88,15 +88,16 @@ public class LoginActivity extends AppCompatActivity {
                             sharedPreferenceConfig.writeLoginStatus(true);
                             finish();
                         } else if (korisnik.getUloga().equals("prodavac")) {
+                            int idPr = korisnik.getId();
                             Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao prodavac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivityProdavac.class);
-
-                            SharedPreferences.Editor editor = getSharedPreferences("My pref", MODE_PRIVATE).edit();
-                            editor.putString("userName", username);
+                            SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
+                            editor.putString("userProdavac", username);
+                            editor.putInt("idProdavca", idPr);
                             editor.apply();
 
-                            intent.putExtra("user", username);
-                            intent.putExtra("id", id);
+                            intent.putExtra("userProdavac", username);
+                            intent.putExtra("idProdavca", idPr);
                             startActivity(intent);
                             sharedPreferenceConfig.writeLoginStatus(true);
                             finish();

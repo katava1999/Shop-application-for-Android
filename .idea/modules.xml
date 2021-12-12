@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Online-shop-aplication-Projekat-Android.iml" filepath="$PROJECT_DIR$/Online-shop-aplication-Projekat-Android.iml" group="Projekat-Android" />
+      <module fileurl="file://$PROJECT_DIR$/app/Online-shop-aplication-app.iml" filepath="$PROJECT_DIR$/app/Online-shop-aplication-app.iml" group="Projekat-Android/app" />
       <module fileurl="file://$PROJECT_DIR$/Projekat-Android.iml" filepath="$PROJECT_DIR$/Projekat-Android.iml" group="Projekat-Android" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Projekat-Android/app" />
     </modules>
