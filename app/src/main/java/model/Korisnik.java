@@ -21,18 +21,6 @@ public class Korisnik {
         this.uloga = uloga;
     }
 
-    @Override
-    public String toString() {
-        return "Korisnik{" +
-                "id=" + id +
-                ", ime='" + ime + '\'' +
-                ", prezime='" + prezime + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", uloga='" + uloga + '\'' +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }

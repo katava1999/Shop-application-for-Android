@@ -34,26 +34,29 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table users(id INTEGER PRIMARY KEY AUTOINCREMENT,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT, uloga TEXT)");
         MyDB.execSQL("create Table kupci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
         MyDB.execSQL("create Table prodavci(id INTEGER PRIMARY KEY AUTOINCREMENT ,ime TEXT, prezime TEXT, username TEXT NOT NULL, password TEXT)");
-        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, prodavac_id INTEGER, FOREIGN KEY (prodavac_id) REFERENCES prodavci(id))");
+        MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, korisnik_id INTEGER, FOREIGN KEY (korisnik_id) REFERENCES users(id))");
         MyDB.execSQL("create Table stavke(id INTEGER PRIMARY KEY, kolicina INTEGER, artikal_id INTEGER, FOREIGN KEY(artikal_id) REFERENCES artikli(id))");
-        MyDB.execSQL("create Table porudzbine(id INTEGER PRIMARY KEY AUTOINCREMENT, kupac_id INTEGER NOT NULL, stavka_id INTEGER NOT NULL, ukupno_cena REAL NOT NULL ,FOREIGN KEY(kupac_id) REFERENCES kupci(id),FOREIGN KEY(stavka_id) REFERENCES stavke(id))");
+        MyDB.execSQL("create Table porudzbine(id INTEGER PRIMARY KEY AUTOINCREMENT, korisnik_id INTEGER NOT NULL, stavka_id INTEGER NOT NULL, ukupno_cena REAL NOT NULL ,FOREIGN KEY(korisnik_id) REFERENCES users(id),FOREIGN KEY(stavka_id) REFERENCES stavke(id))");
 
-        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','administrator')");
+        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (1,'milorad','miloradovic','miloradm','321','prodavac')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (2,'nenad','nenadovic','nenadn','523','prodavac')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (3,'stefan','stefanovic','stefans','123','kupac')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (4,'marko','markovic','markom','123','prodavac')");
-        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (5,'marko','markovic','steva','123','prodavac')");
-
+        MyDB.execSQL("Insert into users(id,ime,prezime,username,password,uloga) VALUES (5,'marko','markovic','markoM','123','prodavac')");
+        /*
         MyDB.execSQL("Insert into kupci(id,ime,prezime,username,password) VALUES (1,'stefan','stefanovic','stefans','123')");
 
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (1,'nenad','nenadovic','nenadn','523')");
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (2,'marko','markovic','markom','123')");
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'marko','markovic','steva','123')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'nenad','nenadovic','nenadn','523')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (5,'marko','markovic','markom','123')");
+        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (2,'marko','markovic','markoM','123')");
 
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (1,'Philips','monitor','331.21','5')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (2,'Lenovo','laptop','140.32','4')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (3,'LG','televizor','45.32','4')");
-        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,prodavac_id) VALUES (4,'Samsung A21s','mobilni telefon','560.42','4')");
+         */
+
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (1,'Philips','monitor','39540',2)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (2,'Lenovo','laptop','55000',5)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (3,'LG','televizor','56000',5)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (4,'Samsung A21s','mobilni telefon','24000',5)");
+        MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (5,'Honor 8x','mobilni telefon','15000',2)");
 
 }
 
@@ -202,10 +205,30 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Prodavac findProdavac(String username){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery("select * from prodavci where username=?", new String[] {username});
+        if(cursor.getCount() == 1){
+            cursor.moveToFirst();
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String ime = cursor.getString(1);
+            String prezime = cursor.getString(2);
+            String usernamee = cursor.getString(3);
+            String password = cursor.getString(4);
+
+            Prodavac prodavac = new Prodavac(id,ime,prezime,usernamee,password);
+
+            return prodavac;
+        }
+        else{
+            return null;
+        }
+    }
+
     public void insertPorudzbinu(Porudzbina porudzbina){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("kupac_id", porudzbina.getKupac_id());
+        contentValues.put("korisnik_id", porudzbina.getKupac_id());
         contentValues.put("stavka_id", porudzbina.getStavka_id());
         contentValues.put("ukupno_cena", porudzbina.getUkupno_cena());
 
@@ -227,7 +250,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<Artikal> getArtikliProdavca(String prodavacId){
         SQLiteDatabase MyDB = this.getReadableDatabase();
         List<Artikal> artikliList = new ArrayList<>();
-        Cursor cursor = MyDB.rawQuery("select * from artikli where prodavac_id=?", new String[] {prodavacId});
+        Cursor cursor = MyDB.rawQuery("select * from artikli where korisnik_id=?", new String[] {prodavacId});
         if(cursor.moveToFirst()){
             do{
                 int id = Integer.parseInt(cursor.getString(0));

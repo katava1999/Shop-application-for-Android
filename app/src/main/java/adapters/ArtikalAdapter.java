@@ -1,37 +1,38 @@
 package adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.LocusId;
-import android.content.SharedPreferences;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.content.LocusId;
+        import android.content.SharedPreferences;
+        import android.text.Editable;
+        import android.text.TextWatcher;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.Filter;
+        import android.widget.Filterable;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.annotation.NonNull;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projekat_android.DBHelper;
-import com.example.projekat_android.LoginActivity;
-import com.example.projekat_android.MainActivityKupac;
-import com.example.projekat_android.OpisArtiklaActivity;
-import com.example.projekat_android.R;
+        import com.example.projekat_android.DBHelper;
+        import com.example.projekat_android.LoginActivity;
+        import com.example.projekat_android.MainActivityKupac;
+        import com.example.projekat_android.OpisArtiklaActivity;
+        import com.example.projekat_android.R;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import model.Artikal;
-import model.Kupac;
-import model.Porudzbina;
-import model.Stavka;
+        import model.Artikal;
+        import model.Korisnik;
+        import model.Kupac;
+        import model.Porudzbina;
+        import model.Stavka;
 
 public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHolder> {
     Context context;
@@ -65,9 +66,9 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
     }
 
     public ArtikalAdapter(Context context, List<Artikal> artikalList, RecyclerView recyclerV){
-            this.context = context;
-            this.artikalList = artikalList;
-            this.recyclerV = recyclerV;
+        this.context = context;
+        this.artikalList = artikalList;
+        this.recyclerV = recyclerV;
     }
 
     @NonNull
@@ -86,20 +87,9 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
         DB = new DBHelper(context);
         //holder.rowId.setText(""+artikal.getId());
         holder.rowNaziv.setText("Naziv: "+artikal.getNaziv());
-        holder.rowOpis.setText("Kliknite za detalje o artiklu");
+        holder.rowOpis.setText("Opis: " +artikal.getOpis());
         //String pr = artikal.getOpis()
-        holder.rowCena.setText("Cena: "+artikal.getCena());
-
-        holder.rowOpis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String opis = String.valueOf(holder.rowOpis.getText().toString());
-                String pr = artikal.getOpis();
-                Intent intent = new Intent(v.getContext(), OpisArtiklaActivity.class);// ovde cu staviti aktiviti gde cu prikazazi opis proidvoda
-                intent.putExtra("opis", pr);
-                v.getContext().startActivity(intent);
-            }
-        });
+        holder.rowCena.setText("Cena: "+  String.valueOf(artikal.getCena()));
 
         holder.rowNaruci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +109,9 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
 
                     SharedPreferences sharedPref = context.getSharedPreferences("My pref", Context.MODE_PRIVATE);
                     String usernameKupca = sharedPref.getString("userName", "No name defined");
-                    Kupac kupac = DB.findKupca(usernameKupca);
-                    int idKupca = kupac.getId();
+                    Korisnik korisnik = DB.findKorisnik(usernameKupca);
+                    //Kupac kupac = DB.findKupca(usernameKupca);
+                    int idKupca = korisnik.getId();
 
                     double cena = artikal.getCena() * kolicina;
                     Porudzbina porudzbina = new Porudzbina(idKupca, idStavke, cena);
@@ -150,7 +141,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     int kolicina = Integer.valueOf(holder.rowKolicina.getText().toString());
                     double cena = artikal.getCena() * kolicina;
                     String pr = String.valueOf(cena);
-                    holder.prikaz.setText("Ukupna cena nakon unete kolicine: " + pr);
+                    holder.prikaz.setText("Ukupna cena nakon unete kolicine: " + pr + " " + "RSD");
                 }
             }
         });

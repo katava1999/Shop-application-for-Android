@@ -10,6 +10,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/odjavaRegKupac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0"
+            android:text="Home" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
@@ -97,6 +112,33 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp">
+
+            <RadioButton
+                android:id="@+id/radioKupac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kupac" />
+
+            <RadioButton
+                android:id="@+id/radioProdavac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prodavac" />
+        </RadioGroup>
     </LinearLayout>
 
     <Button
@@ -108,4 +150,5 @@
         android:layout_marginRight="100dp"
         android:layout_weight="0"
         android:text="Register" />
+
 </LinearLayout>

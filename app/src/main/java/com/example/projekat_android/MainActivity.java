@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         login = findViewById(R.id.btnLoginBS);
         Button reg = findViewById(R.id.btnReg);
-        Button salesman = findViewById(R.id.btnSalesman);
         user = findViewById(R.id.inputUsername);
         pass = findViewById(R.id.inputPass);
     }

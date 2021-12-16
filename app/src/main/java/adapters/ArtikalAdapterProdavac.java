@@ -60,7 +60,7 @@ public class ArtikalAdapterProdavac extends RecyclerView.Adapter<ArtikalAdapterP
         DB = new DBHelper(context);
         holder.naziv.setText(artikal.getNaziv());
         holder.opis.setText(artikal.getOpis());
-        holder.cena.setText(Double.toString(artikal.getCena()));
+        holder.cena.setText(String.valueOf(artikal.getCena()));
 
 
     }

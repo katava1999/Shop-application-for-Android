@@ -2,6 +2,7 @@ package com.example.projekat_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +10,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import model.Korisnik;
+import model.Prodavac;
 
 public class LoginActivity extends AppCompatActivity {
     EditText user;
@@ -19,27 +24,23 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     DBHelper DB;
     private SharedPreferenceConfig sharedPreferenceConfig;
+    TextView greska;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
         login = findViewById(R.id.btnLoginBS);
         Button reg = findViewById(R.id.btnReg);
-        Button salesman = findViewById(R.id.btnSalesman);
         user = findViewById(R.id.inputUsername);
         pass = findViewById(R.id.inputPass);
+        greska = findViewById(R.id.prikazGreske);
 
-        /*if (sharedPreferenceConfig.readLoginStatus()) {
-            startActivity(new Intent(this, RegisterBuyerActivity.class));
-            finish();
+        //sharedPreferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
-        }
 
-         */
         user.addTextChangedListener(loginTextWather);
         pass.addTextChangedListener(loginTextWather);
 
@@ -52,15 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        salesman.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterSalesmanActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,21 +77,23 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("userName", username);
                             editor.apply();
                             startActivity(intent);
-                            sharedPreferenceConfig.writeLoginStatus(true);
                             finish();
                         } else if (korisnik.getUloga().equals("prodavac")) {
-                            int idPr = korisnik.getId();
+                            Prodavac prodavac = DB.findProdavac(username);
+                            //String idProdavca = prodavac.getId().toString();
+                            //String userProdavac = prodavac.getUsername();
+                            String userProdavac = korisnik.getUsername();
+                            String idProdavca = korisnik.getId().toString();
                             Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao prodavac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivityProdavac.class);
                             SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
-                            editor.putString("userProdavac", username);
-                            editor.putInt("idProdavca", idPr);
+                            editor.putString("userProdavac", userProdavac);
+                            editor.putString("idProdavca", idProdavca);
                             editor.apply();
 
                             intent.putExtra("userProdavac", username);
-                            intent.putExtra("idProdavca", idPr);
+                            intent.putExtra("idProdavca", idProdavca);
                             startActivity(intent);
-                            sharedPreferenceConfig.writeLoginStatus(true);
                             finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao admin", Toast.LENGTH_SHORT).show();
@@ -111,17 +105,18 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putInt("id", id);
                             editor.apply();
                             startActivity(intent);
-                            sharedPreferenceConfig.writeLoginStatus(true);
                             finish();
                         }
                     }
                     else {
-                        Toast.makeText(LoginActivity.this, "Unesite prave kredencijale!", Toast.LENGTH_SHORT).show();
+                        greska.setText("Pogresno koricničko ime ili lozinka");
                     }
 
             }}
 
         });
+
+
     }
     private TextWatcher loginTextWather = new TextWatcher() {
         @Override
@@ -143,5 +138,3 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 }
-
-

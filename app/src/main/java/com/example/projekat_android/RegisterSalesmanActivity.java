@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterSalesmanActivity extends AppCompatActivity {
     EditText name, lastname, user, pass;
     Button dugme;
     DBHelper DB;
+    private TextView odjava;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,16 @@ public class RegisterSalesmanActivity extends AppCompatActivity {
                         Toast.makeText(RegisterSalesmanActivity.this, "Korisnik vec postoji!", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        TextView odjava = findViewById(R.id.nazadRegProdavac);
+        odjava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }

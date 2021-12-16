@@ -33,7 +33,6 @@ public class MainActivityKupac extends AppCompatActivity {
     ArtikalAdapter artikliAdapter;
     RecyclerView.LayoutManager layoutManager;
     List<Artikal> artikalList = new ArrayList<>();
-    List<Artikal> filterList = new ArrayList<>();
     TextView odjava;
     EditText pretraga;
 
@@ -50,6 +49,7 @@ public class MainActivityKupac extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         artikliAdapter = new ArtikalAdapter(this, artikalList, recyclerView);
         recyclerView.setAdapter(artikliAdapter);
+
 
         odjava = findViewById(R.id.btnOutKupac);
         odjava.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +83,17 @@ public class MainActivityKupac extends AppCompatActivity {
             }
         });
 
-        }
-        private void filter(String text){
+    }
+
+    private void filter(String text) {
         ArrayList<Artikal> filterList = new ArrayList<>();
-        for (Artikal item : artikalList){
-            if (item.getNaziv().toLowerCase().contains(text.toLowerCase())){
+        for (Artikal item : artikalList) {
+            if (item.getNaziv().toLowerCase().contains(text.toLowerCase())) {
+                filterList.add(item);
+            } else if (item.getOpis().toLowerCase().contains(text.toLowerCase())) {
                 filterList.add(item);
             }
+            artikliAdapter.filteredList(filterList);
         }
-        artikliAdapter.filteredList(filterList);
     }
 }
