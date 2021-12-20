@@ -107,10 +107,9 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     int stavkaId = stavka.getId();
                     DB.insertStavke(stavka);
 
-                    SharedPreferences sharedPref = context.getSharedPreferences("My pref", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = context.getSharedPreferences("My", Context.MODE_PRIVATE);
                     String usernameKupca = sharedPref.getString("userName", "No name defined");
                     Korisnik korisnik = DB.findKorisnik(usernameKupca);
-                    //Kupac kupac = DB.findKupca(usernameKupca);
                     int idKupca = korisnik.getId();
 
                     double cena = artikal.getCena() * kolicina;

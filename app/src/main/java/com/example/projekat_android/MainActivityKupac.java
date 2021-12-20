@@ -55,7 +55,7 @@ public class MainActivityKupac extends AppCompatActivity {
         odjava.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPref = getSharedPreferences("My pref", Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getSharedPreferences("My", Context.MODE_PRIVATE);
                 String usernameKupca = sharedPref.getString("userName", "No name defined");
                 Toast.makeText(MainActivityKupac.this, "Odjavljen kupac: " + usernameKupca, Toast.LENGTH_SHORT).show();
 
@@ -83,7 +83,18 @@ public class MainActivityKupac extends AppCompatActivity {
             }
         });
 
+        final TextView artikliProdavac = findViewById(R.id.prodavacArtikli);
+        artikliProdavac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivityKupac.this, MainActivityProdavac.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
 
     private void filter(String text) {
         ArrayList<Artikal> filterList = new ArrayList<>();

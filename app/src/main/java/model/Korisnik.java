@@ -7,18 +7,16 @@ public class Korisnik {
     private String prezime;
     private String username;
     private String password;
-    private String uloga;
 
     public Korisnik() {
     }
 
-    public Korisnik(Integer id, String ime, String prezime, String username, String password, String uloga) {
+    public Korisnik(Integer id, String ime, String prezime, String username, String password) {
         this.id = id;
         this.ime = ime;
         this.prezime = prezime;
         this.username = username;
         this.password = password;
-        this.uloga = uloga;
     }
 
     public Integer getId() {
@@ -61,11 +59,4 @@ public class Korisnik {
         this.password = password;
     }
 
-    public String getUloga() {
-        return uloga;
-    }
-
-    public void setUloga(String uloga) {
-        this.uloga = uloga;
-    }
 }

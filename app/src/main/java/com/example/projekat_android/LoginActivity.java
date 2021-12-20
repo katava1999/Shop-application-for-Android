@@ -68,45 +68,16 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkuserpass = DB.checkusernamepassword(username, password);
                     if (checkuserpass == true) {
                         Korisnik korisnik = DB.findKorisnik(username);
-                        int id = korisnik.getId();
-                        if (korisnik.getUloga().equals("kupac")) {
-                            Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao kupac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
-                            intent.putExtra("id", id);
-                            SharedPreferences.Editor editor = getSharedPreferences("My pref", MODE_PRIVATE).edit();
-                            editor.putString("userName", username);
-                            editor.apply();
-                            startActivity(intent);
-                            finish();
-                        } else if (korisnik.getUloga().equals("prodavac")) {
-                            Prodavac prodavac = DB.findProdavac(username);
-                            //String idProdavca = prodavac.getId().toString();
-                            //String userProdavac = prodavac.getUsername();
-                            String userProdavac = korisnik.getUsername();
-                            String idProdavca = korisnik.getId().toString();
-                            Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao prodavac" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivityProdavac.class);
-                            SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
-                            editor.putString("userProdavac", userProdavac);
-                            editor.putString("idProdavca", idProdavca);
-                            editor.apply();
-
-                            intent.putExtra("userProdavac", username);
-                            intent.putExtra("idProdavca", idProdavca);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali kao admin", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, RegisterSalesmanActivity.class);
-                            //intent.putExtra("user", user);
-                            //intent.putExtra("id", id);
-                            SharedPreferences.Editor editor = getSharedPreferences("My pref", MODE_PRIVATE).edit();
-                            editor.putString("userName", username);
-                            editor.putInt("id", id);
-                            editor.apply();
-                            startActivity(intent);
-                            finish();
-                        }
+                        String id = korisnik.getId().toString();
+                        Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
+                        intent.putExtra("id", id);
+                        SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
+                        editor.putString("userName", username);
+                        editor.putString("idProdavca", id);
+                        editor.apply();
+                        startActivity(intent);
+                        finish();
                     }
                     else {
                         greska.setText("Pogresno koricničko ime ili lozinka");

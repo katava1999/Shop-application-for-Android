@@ -14,9 +14,6 @@ import android.widget.Toast;
 
 public class RegisterBuyerActivity extends AppCompatActivity {
     EditText name, lastname, username, password;
-    RadioButton radioButton;
-    RadioButton radioButton2;
-    RadioGroup radioGroup;
     Button register;
     DBHelper DB;
 
@@ -30,9 +27,6 @@ public class RegisterBuyerActivity extends AppCompatActivity {
         username = findViewById(R.id.inputUsernameBuyer);
         password = findViewById(R.id.inputPasswordBuyer);
         register = findViewById(R.id.btnRegisterBuyer);
-        radioButton = findViewById(R.id.radioKupac);
-        radioButton2 = findViewById(R.id.radioProdavac);
-        radioGroup = findViewById(R.id.radioGroup);
 
         DB = new DBHelper(this);
 
@@ -43,33 +37,18 @@ public class RegisterBuyerActivity extends AppCompatActivity {
                 String prezime = lastname.getText().toString();
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                String kupac = "kupac";
-                String prodavac = "prodavac";
 
                 if (ime.equals("")||prezime.equals("")||user.equals("")||pass.equals("")){
                     Toast.makeText(RegisterBuyerActivity.this, "Morate popuniti sva polja", Toast.LENGTH_SHORT).show();
-                }else if (radioButton.isChecked()){
+                }else{
                     Boolean check = DB.checkusername(user);
                     if (check == false){
-                        Boolean insert = DB.insertData(ime, prezime, user, pass, kupac);
+                        Boolean insert = DB.insertData(ime, prezime, user, pass);
                         if (insert == true){
                             Toast.makeText(RegisterBuyerActivity.this, "Uspesno ste se registrovali", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         }
-                }else{
-                        Toast.makeText(RegisterBuyerActivity.this, "Korisnik vec postoji", Toast.LENGTH_SHORT).show();
-                    }
-                }else if (radioButton2.isChecked()){
-                    Boolean check = DB.checkusername(user);
-                    if (check == false){
-                        Boolean insert = DB.insertData(ime, prezime, user, pass, prodavac);
-                        if (insert == true){
-                            Toast.makeText(RegisterBuyerActivity.this, "Uspesno ste se registrovali", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        }else{
-                            Toast.makeText(RegisterBuyerActivity.this, "Registracion failed", Toast.LENGTH_SHORT).show();
-                        }
-                }else{
+                    }else{
                         Toast.makeText(RegisterBuyerActivity.this, "Korisnik vec postoji", Toast.LENGTH_SHORT).show();
                     }
                 }

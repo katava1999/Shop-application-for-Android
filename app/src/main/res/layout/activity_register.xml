@@ -115,32 +115,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp">
-
-            <RadioButton
-                android:id="@+id/radioKupac"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kupac" />
-
-            <RadioButton
-                android:id="@+id/radioProdavac"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prodavac" />
-        </RadioGroup>
-    </LinearLayout>
-
     <Button
         android:id="@+id/btnRegisterBuyer"
         android:layout_width="match_parent"

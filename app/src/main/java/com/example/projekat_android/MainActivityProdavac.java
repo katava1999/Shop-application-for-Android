@@ -22,7 +22,6 @@ import model.Artikal;
 
 public class MainActivityProdavac extends AppCompatActivity {
     RecyclerView recyclerView;
-    private SharedPreferenceConfig sharedPreferenceConfig;
     DBHelper DB;
     ArtikalAdapterProdavac artikliProdavac;
     List<Artikal> artikal = new ArrayList<>();
@@ -54,11 +53,9 @@ public class MainActivityProdavac extends AppCompatActivity {
         odjava.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getSharedPreferences("My", MODE_PRIVATE);
-                String user = prefs.getString("userProdavac", "No name defined");
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                Toast.makeText(MainActivityProdavac.this, "Odjavljen prodavac "+user, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), MainActivityKupac.class);
                 startActivity(i);
+                finish();
             }
         });
 
