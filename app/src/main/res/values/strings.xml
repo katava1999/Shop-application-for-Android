@@ -3,4 +3,6 @@
     <string name="user_name">nenadn</string>
     <string name="login_preference">com.example.projekat_android_login_preference</string>
     <string name="login_status_preference">com.example.projekat_android_login_status_preference</string>
+    <string name="naslov">Naslov</string>
+
 </resources>

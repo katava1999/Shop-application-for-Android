@@ -59,5 +59,16 @@ public class MainActivityProdavac extends AppCompatActivity {
             }
         });
 
+        TextView dodaj = findViewById(R.id.dodajArtikal);
+        dodaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = getSharedPreferences("My", MODE_PRIVATE);
+                String i = prefs.getString("idProdavca", "No name defined");
+                Intent intent = new Intent(MainActivityProdavac.this, DodajArtikalActivity.class);
+                intent.putExtra("id", i);
+                startActivity(intent);
+            }
+        });
     }
 }

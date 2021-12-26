@@ -116,6 +116,8 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     Porudzbina porudzbina = new Porudzbina(idKupca, idStavke, cena);
                     DB.insertPorudzbinu(porudzbina);
 
+                    // Kupljeni kupljeni = new Kupljeni(usernameKupca, artikal, kolicna, ukupnaCena)
+
                     Toast.makeText(v.getContext(), "Uspesno ste izvrsili kupovinu za "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
                     holder.rowKolicina.setText("");
                     holder.prikaz.setText("");

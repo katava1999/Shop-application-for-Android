@@ -9,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PrikazKupljenihArtikalaActivity"></activity>
+        <activity android:name=".DodajArtikalActivity" />
         <activity android:name=".OpisArtiklaActivity" />
         <activity android:name=".MainActivityProdavac" />
-        <activity android:name=".MainActivityKupac" />
+        <activity android:name=".MainActivityKupac"
+            android:label="@string/naslov"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterBuyerActivity" />
         <activity android:name=".LoginActivity">

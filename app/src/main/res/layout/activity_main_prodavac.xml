@@ -22,6 +22,16 @@
             android:layout_weight="0"
             android:gravity="center"
             android:text="Back to items" />
+
+        <TextView
+            android:id="@+id/dodajArtikal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="205dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="0"
+            android:text="Dodaj artikal" />
     </LinearLayout>
 
     <LinearLayout

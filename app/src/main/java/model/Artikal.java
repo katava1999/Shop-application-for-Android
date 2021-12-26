@@ -34,6 +34,13 @@ public class Artikal {
         this.cena = cena;
     }
 
+    public Artikal(String naziv, String opis, double cena, int prodavac_id) {
+        this.naziv = naziv;
+        this.opis = opis;
+        this.cena = cena;
+        this.prodavac_id = prodavac_id;
+    }
+
     public Integer getId() {
         return id;
     }

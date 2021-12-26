@@ -38,9 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.inputPass);
         greska = findViewById(R.id.prikazGreske);
 
-        //sharedPreferenceConfig = new SharedPreferenceConfig(getApplicationContext());
-
-
         user.addTextChangedListener(loginTextWather);
         pass.addTextChangedListener(loginTextWather);
 
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         String id = korisnik.getId().toString();
                         Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
-                        intent.putExtra("id", id);
+                        intent.putExtra("idProdavca", id);
                         SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
                         editor.putString("userName", username);
                         editor.putString("idProdavca", id);

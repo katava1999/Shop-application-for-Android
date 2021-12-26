@@ -43,14 +43,6 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password) VALUES (3,'stefan','stefanovic','stefans','123')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password) VALUES (4,'marko','markovic','markom','123')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password) VALUES (5,'marko','markovic','markoM','123')");
-        /*
-        MyDB.execSQL("Insert into kupci(id,ime,prezime,username,password) VALUES (1,'stefan','stefanovic','stefans','123')");
-
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (3,'nenad','nenadovic','nenadn','523')");
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (5,'marko','markovic','markom','123')");
-        MyDB.execSQL("Insert into prodavci(id,ime,prezime,username,password) VALUES (2,'marko','markovic','markoM','123')");
-
-         */
 
         MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (1,'Philips','monitor','39540',2)");
         MyDB.execSQL("Insert into artikli(id,naziv,opis,cena,korisnik_id) VALUES (2,'Lenovo','laptop','55000',5)");
@@ -193,6 +185,23 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return artikliList;
+
+    }
+
+    public void deleteArtikal(int id){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.delete("artikli", "id = ?", new String[] {String.valueOf(id)});
+    }
+
+    public void insertArtikal(Artikal artikal){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("naziv", artikal.getNaziv());
+        contentValues.put("opis", artikal.getOpis());
+        contentValues.put("cena", artikal.getCena());
+        contentValues.put("korisnik_id", artikal.getProdavac_id());
+
+        MyDB.insert("artikli", null, contentValues);
 
     }
 }
