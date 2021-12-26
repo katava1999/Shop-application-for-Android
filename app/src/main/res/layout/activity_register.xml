@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03DAC5"
     android:orientation="vertical"
     tools:context=".RegisterBuyerActivity">
 
@@ -16,10 +17,11 @@
             android:id="@+id/odjavaRegKupac"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="0"
-            android:text="Home" />
+            android:text="Home"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -32,14 +34,19 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Ime" />
+            android:text="Ime"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/inputImeBuyer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
@@ -57,12 +64,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Prezime" />
+            android:text="Prezime"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/inputPrezimeBuyer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
@@ -80,12 +90,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Username" />
+            android:text="Username"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/inputUsernameBuyer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
@@ -103,12 +115,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Password" />
+            android:text="Password"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/inputPasswordBuyer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
@@ -123,6 +137,6 @@
         android:layout_marginTop="70dp"
         android:layout_marginRight="100dp"
         android:layout_weight="0"
-        android:text="Register" />
+        android:text="Registruj se" />
 
 </LinearLayout>

@@ -5,18 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Artikal;
 import model.Korisnik;
-import model.Kupac;
+import model.Kupljen;
 import model.Porudzbina;
-import model.Prodavac;
 import model.Stavka;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -37,6 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table artikli(id INTEGER PRIMARY KEY AUTOINCREMENT, naziv TEXT, opis TEXT, cena DOUBLE, korisnik_id INTEGER, FOREIGN KEY (korisnik_id) REFERENCES users(id))");
         MyDB.execSQL("create Table stavke(id INTEGER PRIMARY KEY, kolicina INTEGER, artikal_id INTEGER, FOREIGN KEY(artikal_id) REFERENCES artikli(id))");
         MyDB.execSQL("create Table porudzbine(id INTEGER PRIMARY KEY AUTOINCREMENT, korisnik_id INTEGER NOT NULL, stavka_id INTEGER NOT NULL, ukupno_cena REAL NOT NULL ,FOREIGN KEY(korisnik_id) REFERENCES users(id),FOREIGN KEY(stavka_id) REFERENCES stavke(id))");
+        MyDB.execSQL("create Table kupljen(id INTEGER PRIMARY KEY AUTOINCREMENT,artikal TEXT, username TEXT NOT NULL, kolicina INTEGER, ukupna_cena REAL)");
 
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password) VALUES (1,'milorad','miloradovic','miloradm','321')");
         MyDB.execSQL("Insert into users(id,ime,prezime,username,password) VALUES (2,'nenad','nenadovic','nenadn','523')");
@@ -62,6 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists artikli");
         MyDB.execSQL("drop Table if exists stavke");
         MyDB.execSQL("drop Table if exists porudzbine");
+        MyDB.execSQL("drop Table if exists kupljen");
     }
 
     public Boolean checkusernamepassword(String username, String password) {
@@ -202,6 +200,37 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("korisnik_id", artikal.getProdavac_id());
 
         MyDB.insert("artikli", null, contentValues);
+
+    }
+
+    public List<Kupljen> getArtikliKupca(String usernamee){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        List<Kupljen> artikliK = new ArrayList<>();
+        Cursor cursor = MyDB.rawQuery("select * from kupljen where username=?", new String[] {usernamee});
+        if(cursor.moveToFirst()){
+            do{cursor.getInt(4);
+                int id = Integer.parseInt(cursor.getString(0));
+                String artikal = cursor.getString(1);
+                String username = cursor.getString(2);
+                Integer kolicina = cursor.getInt(3);
+                Double ukupna_cena = Double.parseDouble(cursor.getString(4));
+                artikliK.add(new Kupljen(id, artikal, username, kolicina, ukupna_cena));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return artikliK;
+
+    }
+
+    public void insertArtikalKupca(Kupljen kupljen){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("artikal", kupljen.getArtikal());
+        contentValues.put("username", kupljen.getUsername());
+        contentValues.put("kolicina", kupljen.getKolicina());
+        contentValues.put("ukupna_cena", kupljen.getUkupna_cena());
+
+        MyDB.insert("kupljen", null, contentValues);
 
     }
 }

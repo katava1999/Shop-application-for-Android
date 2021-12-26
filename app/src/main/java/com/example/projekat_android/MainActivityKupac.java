@@ -75,14 +75,15 @@ public class MainActivityKupac extends AppCompatActivity {
             }
         });
 
+
+
         //Odavde ide SPINNER
         spinner = findViewById(R.id.aSpinnerToolBar);
 
         List<String> categories = new ArrayList<>();
-        categories.add(0, "Opcije");
-        //categories.add("Kupljeni Artikli");
+        categories.add(0, "Options");
         categories.add("Logout");
-        categories.add("Moji Artikli");
+        categories.add("My items");
 
 
 
@@ -109,14 +110,14 @@ public class MainActivityKupac extends AppCompatActivity {
                         SharedPreferences sharedPref = getSharedPreferences("My", Context.MODE_PRIVATE);
                         String usernameKupca = sharedPref.getString("userName", "No name defined");
                         Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivityKupac.this, "Odjavljen kupac: " + usernameKupca, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivityKupac.this, "Logout successful for: " + usernameKupca, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         finish();
 
 
                     }
-                    if (parent.getItemAtPosition(position).equals("Moji Artikli")) {
+                    if (parent.getItemAtPosition(position).equals("My items")) {
                         Intent intent = new Intent(MainActivityKupac.this, MainActivityProdavac.class);
                         Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
                         startActivity(intent);

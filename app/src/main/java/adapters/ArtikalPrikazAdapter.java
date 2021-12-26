@@ -60,7 +60,6 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
         final Artikal artikal = artikalList.get(position);
         DB = new DBHelper(context);
 
-        //  PRAVICU NOVU TABELU GDE CU CUVATI NAZIV ARTIKLA, KOLICINU I UKUPNU CENU
     }
 
     @Override

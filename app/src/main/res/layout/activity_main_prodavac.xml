@@ -4,35 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03DAC5"
     android:orientation="vertical"
     tools:context=".MainActivityProdavac">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="#03DAC5"
+        android:paddingTop="8dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:visibility="visible">
 
-        <TextView
-            android:id="@+id/odjavaProdavac"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="0"
-            android:gravity="center"
-            android:text="Back to items" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white" />
 
-        <TextView
-            android:id="@+id/dodajArtikal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="205dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="0"
-            android:text="Dodaj artikal" />
-    </LinearLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
+            android:visibility="visible"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <Spinner
+                android:id="@+id/ToolBar"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="20dp"
+                android:ems="10"
+                android:textColor="@color/white"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

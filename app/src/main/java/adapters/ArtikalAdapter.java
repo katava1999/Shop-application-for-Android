@@ -31,6 +31,7 @@ package adapters;
         import model.Artikal;
         import model.Korisnik;
         import model.Kupac;
+        import model.Kupljen;
         import model.Porudzbina;
         import model.Stavka;
 
@@ -116,7 +117,8 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     Porudzbina porudzbina = new Porudzbina(idKupca, idStavke, cena);
                     DB.insertPorudzbinu(porudzbina);
 
-                    // Kupljeni kupljeni = new Kupljeni(usernameKupca, artikal, kolicna, ukupnaCena)
+                    Kupljen kupljen = new Kupljen(artikal.getNaziv(), usernameKupca, kolicina, cena);
+                    DB.insertArtikalKupca(kupljen);
 
                     Toast.makeText(v.getContext(), "Uspesno ste izvrsili kupovinu za "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
                     holder.rowKolicina.setText("");

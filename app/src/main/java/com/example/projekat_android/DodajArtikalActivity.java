@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import model.Artikal;
 
 public class DodajArtikalActivity extends AppCompatActivity {
@@ -28,11 +30,6 @@ public class DodajArtikalActivity extends AppCompatActivity {
         txtCena = findViewById(R.id.txtCena);
         dodaj = findViewById(R.id.dodajartikalubazu);
 
-        /*
-        Intent intent = getIntent();
-        final String id = intent.getStringExtra("id");
-
-         */
         dodaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +51,16 @@ public class DodajArtikalActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+
+        TextView nazad = findViewById(R.id.nazadDugme);
+        nazad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivityProdavac.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -58,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = pass.getText().toString();
 
                 if (username.equals("")||password.equals("")){
-                    Toast.makeText(LoginActivity.this, "Popunite sva polja", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Fill all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (checkuserpass == true) {
                         Korisnik korisnik = DB.findKorisnik(username);
                         String id = korisnik.getId().toString();
-                        Toast.makeText(LoginActivity.this, "Uspesno ste se ulogovali" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login successful for:" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
                         intent.putExtra("idProdavca", id);
                         SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
@@ -77,7 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                     else {
-                        greska.setText("Pogresno koricničko ime ili lozinka");
+                        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+                        anim.setDuration(500);
+                        anim.setStartOffset(20);
+                        anim.setRepeatMode(Animation.REVERSE);
+                        anim.setRepeatCount(3);
+                        greska.startAnimation(anim);
+                        greska.setText("Wrong username or password");
                     }
 
             }}
@@ -86,6 +94,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    /* <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        />
+*/
     private TextWatcher loginTextWather = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
