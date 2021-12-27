@@ -53,16 +53,16 @@ public class MainActivityProdavac extends AppCompatActivity {
             artikliProdavac = new ArtikalAdapterProdavac(this, artikal, recyclerView);
             recyclerView.setAdapter(artikliProdavac);
         }else{
-            Toast.makeText(MainActivityProdavac.this, "Nema artikala u bazi podataka", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivityProdavac.this, "There are no items in the database", Toast.LENGTH_SHORT).show();
         }
 
         //Odavde ide SPINNER
         Spinner = findViewById(R.id.ToolBar);
 
         List<String> categories = new ArrayList<>();
-        categories.add(0, "Opcije");
-        categories.add("Povratak na artikle");
-        categories.add("Dodaj novi artikal");
+        categories.add(0, "Options");
+        categories.add("Return to items");
+        categories.add("Add a new item");
 
 
 
@@ -84,15 +84,15 @@ public class MainActivityProdavac extends AppCompatActivity {
                     String item = parent.getItemAtPosition(position).toString();
                     //Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
 
-                    if (parent.getItemAtPosition(position).equals("Povratak na artikle")) {
-                        Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
+                    if (parent.getItemAtPosition(position).equals("Return to items")) {
+                        Toast.makeText(parent.getContext(), "You have chosen: " + item, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), MainActivityKupac.class);
                         startActivity(i);
                         finish();
 
 
-                    }if (parent.getItemAtPosition(position).equals("Dodaj novi artikal")) {
-                        Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
+                    }if (parent.getItemAtPosition(position).equals("Add a new item")) {
+                        Toast.makeText(parent.getContext(), "You have chosen: " + item, Toast.LENGTH_SHORT).show();
                         SharedPreferences prefs = getSharedPreferences("My", MODE_PRIVATE);
                         String i = prefs.getString("idProdavca", "No name defined");
                         Intent intent = new Intent(MainActivityProdavac.this, DodajArtikalActivity.class);

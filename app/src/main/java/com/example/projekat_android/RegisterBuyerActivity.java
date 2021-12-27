@@ -39,17 +39,17 @@ public class RegisterBuyerActivity extends AppCompatActivity {
                 String pass = password.getText().toString();
 
                 if (ime.equals("")||prezime.equals("")||user.equals("")||pass.equals("")){
-                    Toast.makeText(RegisterBuyerActivity.this, "Morate popuniti sva polja", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterBuyerActivity.this, "You must fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
                     Boolean check = DB.checkusername(user);
                     if (check == false){
                         Boolean insert = DB.insertData(ime, prezime, user, pass);
                         if (insert == true){
-                            Toast.makeText(RegisterBuyerActivity.this, "Uspesno ste se registrovali", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterBuyerActivity.this, "You have successfully registered", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         }
                     }else{
-                        Toast.makeText(RegisterBuyerActivity.this, "Korisnik vec postoji", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterBuyerActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

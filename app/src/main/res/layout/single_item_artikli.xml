@@ -13,27 +13,27 @@
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Naziv"
+        android:text="Name"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/item_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Opis" />
+        android:text="Description" />
 
     <TextView
         android:id="@+id/item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cena" />
+        android:text="Price" />
 
     <EditText
         android:id="@+id/inputKolicina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Unesite kolicinu"
+        android:hint="Enter the quantity"
         android:inputType="number" />
 
     <TextView
@@ -49,6 +49,6 @@
         android:layout_marginLeft="200dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:text="Naruci" />
+        android:text="buy" />
 
 </LinearLayout>

@@ -41,12 +41,12 @@ public class DodajArtikalActivity extends AppCompatActivity {
                 Double cena = Double.valueOf(txtCena.getText().toString());
 
                 if (naziv.equals("") || opis.equals("") || cena.equals("")){
-                    Toast.makeText(DodajArtikalActivity.this, "Unesite sva polja", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DodajArtikalActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show();
                 }else{
                     DB = new DBHelper(DodajArtikalActivity.this);
                     Artikal artikal = new Artikal(naziv, opis, cena, ID);
                     DB.insertArtikal(artikal);
-                    Toast.makeText(DodajArtikalActivity.this, "Uspesno ste dodali artikal", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DodajArtikalActivity.this, "You have successfully added an item", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivityProdavac.class);
                     startActivity(intent);
                     finish();

@@ -82,8 +82,8 @@ public class MainActivityKupac extends AppCompatActivity {
 
         List<String> categories = new ArrayList<>();
         categories.add(0, "Options");
-        categories.add("Logout");
         categories.add("My items");
+        categories.add("Logout");
 
 
 
@@ -105,22 +105,20 @@ public class MainActivityKupac extends AppCompatActivity {
                     String item = parent.getItemAtPosition(position).toString();
                     //Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
 
+                    if (parent.getItemAtPosition(position).equals("My items")) {
+                        Intent intent = new Intent(MainActivityKupac.this, MainActivityProdavac.class);
+                        Toast.makeText(parent.getContext(), "You choosed: " + item, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
                     if (parent.getItemAtPosition(position).equals("Logout")) {
 
                         SharedPreferences sharedPref = getSharedPreferences("My", Context.MODE_PRIVATE);
                         String usernameKupca = sharedPref.getString("userName", "No name defined");
-                        Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(parent.getContext(), "You choosed: " + item, Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivityKupac.this, "Logout successful for: " + usernameKupca, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         finish();
-
-
-                    }
-                    if (parent.getItemAtPosition(position).equals("My items")) {
-                        Intent intent = new Intent(MainActivityKupac.this, MainActivityProdavac.class);
-                        Toast.makeText(parent.getContext(), "Odabrali ste: " + item, Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
                     }
                 }
 

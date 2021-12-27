@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="Nazad"
+            android:text="Back"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -35,14 +35,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Naziv"
+            android:gravity="right"
+            android:text="Name"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/txtNaziv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:ems="10"
@@ -52,7 +53,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Opis"
+            android:text="Description"
             android:textSize="20sp" />
 
         <EditText
@@ -86,14 +86,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Cena"
+            android:gravity="right"
+            android:text="Price"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/txtCena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:ems="10"
@@ -112,6 +113,6 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Dodaj" />
+            android:text="add item" />
     </LinearLayout>
 </LinearLayout>

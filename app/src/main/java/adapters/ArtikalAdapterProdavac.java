@@ -82,7 +82,7 @@ public class ArtikalAdapterProdavac extends RecyclerView.Adapter<ArtikalAdapterP
 
 
                  if (naziv.equals("") || opis.equals("") || cena<=0){
-                     CharSequence text = "Unesite sva polja";
+                     CharSequence text = "Enter all fields";
                      int duration = Toast.LENGTH_SHORT;
                      Toast toast = Toast.makeText(context, text, duration);
                      toast.show();

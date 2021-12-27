@@ -15,8 +15,7 @@
             android:id="@+id/itemArtikal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Artikal" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -30,8 +29,7 @@
             android:id="@+id/ItemKolicina"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Kolicina" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +43,6 @@
             android:id="@+id/itemUkupnaCena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ukupna cena" />
+            android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>

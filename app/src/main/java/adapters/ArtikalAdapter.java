@@ -87,10 +87,10 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
         final Artikal artikal = artikalList.get(position);
         DB = new DBHelper(context);
         //holder.rowId.setText(""+artikal.getId());
-        holder.rowNaziv.setText("Naziv: "+artikal.getNaziv());
-        holder.rowOpis.setText("Opis: " +artikal.getOpis());
+        holder.rowNaziv.setText("Name: "+artikal.getNaziv());
+        holder.rowOpis.setText("Description: " +artikal.getOpis());
         //String pr = artikal.getOpis()
-        holder.rowCena.setText("Cena: "+  String.valueOf(artikal.getCena()));
+        holder.rowCena.setText("Price: "+  String.valueOf(artikal.getCena()));
 
         holder.rowNaruci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +98,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
 
                 int artikal_id = artikal.getId();
                 if (holder.rowKolicina.getText().toString().equals("")){
-                    Toast.makeText(v.getContext(), "Morate uneti kolicinu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "You must enter quantity", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     int kolicina = Integer.valueOf(holder.rowKolicina.getText().toString());
@@ -120,7 +120,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     Kupljen kupljen = new Kupljen(artikal.getNaziv(), usernameKupca, kolicina, cena);
                     DB.insertArtikalKupca(kupljen);
 
-                    Toast.makeText(v.getContext(), "Uspesno ste izvrsili kupovinu za "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "You have successfully made a purchase for "+ artikal.getNaziv(), Toast.LENGTH_SHORT).show();
                     holder.rowKolicina.setText("");
                     holder.prikaz.setText("");
 
@@ -144,7 +144,7 @@ public class ArtikalAdapter extends RecyclerView.Adapter<ArtikalAdapter.ViewHold
                     int kolicina = Integer.valueOf(holder.rowKolicina.getText().toString());
                     double cena = artikal.getCena() * kolicina;
                     String pr = String.valueOf(cena);
-                    holder.prikaz.setText("Ukupna cena nakon unete kolicine: " + pr + " " + "RSD");
+                    holder.prikaz.setText("Total price after quantity entered: " + pr + " " + "RSD");
                 }
             }
         });

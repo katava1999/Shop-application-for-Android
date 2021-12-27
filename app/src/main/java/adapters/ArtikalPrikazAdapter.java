@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projekat_android.DBHelper;
+import com.example.projekat_android.DodajArtikalActivity;
 import com.example.projekat_android.R;
 
 import java.util.List;
 
 import model.Artikal;
+import model.Kupljen;
 import model.Porudzbina;
 import model.Stavka;
 
@@ -22,7 +24,7 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
     Context context;
     DBHelper DB;
     RecyclerView recyclerV;
-    List<Artikal> artikalList;
+    List<Kupljen> artikalList;
 
     final View.OnClickListener onClickListener = new ArtikalPrikazAdapter.MyOnClickListner();
 
@@ -39,7 +41,7 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
         }
     }
 
-    public ArtikalPrikazAdapter(Context context, List<Artikal> artikalList, RecyclerView recyclerV){
+    public ArtikalPrikazAdapter(Context context, List<Kupljen> artikalList, RecyclerView recyclerV){
         this.context = context;
         this.artikalList = artikalList;
         this.recyclerV = recyclerV;
@@ -57,14 +59,16 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Artikal artikal = artikalList.get(position);
+        Kupljen kupljen = artikalList.get(position);
         DB = new DBHelper(context);
-
+        holder.rowartikal.setText(kupljen.getArtikal());
+        holder.rowkolicina.setText(kupljen.getKolicina());
+        holder.rowukupnaCena.setText(String.valueOf(kupljen.getUkupna_cena()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return artikalList.size();
     }
 
     private class MyOnClickListner implements View.OnClickListener {
