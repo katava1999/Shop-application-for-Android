@@ -61,9 +61,9 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Kupljen kupljen = artikalList.get(position);
         DB = new DBHelper(context);
-        holder.rowartikal.setText(kupljen.getArtikal());
-        holder.rowkolicina.setText(kupljen.getKolicina());
-        holder.rowukupnaCena.setText(String.valueOf(kupljen.getUkupna_cena()));
+        holder.rowartikal.setText("Item name: " + kupljen.getArtikal());
+        holder.rowkolicina.setText(String.valueOf("Quantity: "+kupljen.getKolicina()));
+        holder.rowukupnaCena.setText(String.valueOf("Total price: "+kupljen.getUkupna_cena()));
     }
 
     @Override

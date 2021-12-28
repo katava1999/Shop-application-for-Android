@@ -83,6 +83,7 @@ public class MainActivityKupac extends AppCompatActivity {
         List<String> categories = new ArrayList<>();
         categories.add(0, "Options");
         categories.add("My items");
+        categories.add("Bought items");
         categories.add("Logout");
 
 
@@ -117,6 +118,15 @@ public class MainActivityKupac extends AppCompatActivity {
                         Toast.makeText(parent.getContext(), "You choosed: " + item, Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivityKupac.this, "Logout successful for: " + usernameKupca, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    if (parent.getItemAtPosition(position).equals("Bought items")) {
+
+                        SharedPreferences sharedPref = getSharedPreferences("My", Context.MODE_PRIVATE);
+                        String usernameKupca = sharedPref.getString("userName", "No name defined");
+                        Toast.makeText(parent.getContext(), "You choosed: " + item, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(), PrikazKupljenihArtikalaActivity.class);
                         startActivity(i);
                         finish();
                     }

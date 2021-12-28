@@ -52,6 +52,7 @@ public class MainActivityProdavac extends AppCompatActivity {
         if (artikal.size() > 0){
             artikliProdavac = new ArtikalAdapterProdavac(this, artikal, recyclerView);
             recyclerView.setAdapter(artikliProdavac);
+            Toast.makeText(MainActivityProdavac.this, "Total number of your items: " + artikal.size(), Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(MainActivityProdavac.this, "There are no items in the database", Toast.LENGTH_SHORT).show();
         }
