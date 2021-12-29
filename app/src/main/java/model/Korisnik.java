@@ -1,62 +1,64 @@
 package model;
 
-public class Korisnik {
+import java.io.Serializable;
 
-    private Integer id;
-    private String ime;
-    private String prezime;
-    private String username;
-    private String password;
+public class Korisnik implements Serializable {
+
+    private Integer _id;
+    private String Ime;
+    private String Prezime;
+    private String Username;
+    private String Password;
 
     public Korisnik() {
     }
 
     public Korisnik(Integer id, String ime, String prezime, String username, String password) {
-        this.id = id;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.username = username;
-        this.password = password;
+        _id = id;
+        Ime = ime;
+        Prezime = prezime;
+        Username = username;
+        Password = password;
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getIme() {
-        return ime;
+        return Ime;
     }
 
     public void setIme(String ime) {
-        this.ime = ime;
+        this.Ime = ime;
     }
 
     public String getPrezime() {
-        return prezime;
+        return Prezime;
     }
 
     public void setPrezime(String prezime) {
-        this.prezime = prezime;
+        this.Prezime = prezime;
     }
 
     public String getUsername() {
-        return username;
+        return Username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.Username = username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.Password = password;
     }
 
 }

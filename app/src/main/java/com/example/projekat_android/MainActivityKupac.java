@@ -29,6 +29,7 @@ import java.util.List;
 
 import adapters.ArtikalAdapter;
 import model.Artikal;
+import model.Korisnik;
 import model.Kupac;
 
 public class MainActivityKupac extends AppCompatActivity {
@@ -40,13 +41,16 @@ public class MainActivityKupac extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     List<Artikal> artikalList = new ArrayList<>();
     private Spinner spinner;
-    TextView odjava;
     EditText pretraga;
+    Korisnik korisnik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_kupac);
+
+        Intent intent = getIntent();
+        korisnik = (Korisnik) intent.getSerializableExtra("user");
 
         DB = new DBHelper(this);
         artikalList = DB.getArtikli();
@@ -117,9 +121,14 @@ public class MainActivityKupac extends AppCompatActivity {
                         String usernameKupca = sharedPref.getString("userName", "No name defined");
                         Toast.makeText(parent.getContext(), "You choosed: " + item, Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivityKupac.this, "Logout successful for: " + usernameKupca, Toast.LENGTH_SHORT).show();
+                        SharedPreferences pref = getSharedPreferences("My", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.clear();
+                        editor.commit();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         finish();
+
                     }
                     if (parent.getItemAtPosition(position).equals("Bought items")) {
 

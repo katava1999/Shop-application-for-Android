@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     DBHelper DB;
     private SharedPreferenceConfig sharedPreferenceConfig;
     TextView greska;
+    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
 
         DB=new DBHelper(this);
 
+
+
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("My", Context.MODE_PRIVATE);
+                String userIsLoggedUsername = sharedPreferences.getString("userName", null);
+
                 String username = user.getText().toString();
                 String password = pass.getText().toString();
 
@@ -68,12 +75,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (checkuserpass == true) {
                         Korisnik korisnik = DB.findKorisnik(username);
                         String id = korisnik.getId().toString();
+                        //String userIsLoggedUsername = sharedPreferences.getString("userName", null);
                         Toast.makeText(LoginActivity.this, "Login successful for:" + " " + korisnik.getUsername(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivityKupac.class);
                         intent.putExtra("idProdavca", id);
                         SharedPreferences.Editor editor = getSharedPreferences("My", MODE_PRIVATE).edit();
                         editor.putString("userName", username);
                         editor.putString("idProdavca", id);
+                        editor.putBoolean("is_logged", true);
                         editor.apply();
                         startActivity(intent);
                         finish();
@@ -91,8 +100,6 @@ public class LoginActivity extends AppCompatActivity {
             }}
 
         });
-
-
     }
 
     /* <ImageView
