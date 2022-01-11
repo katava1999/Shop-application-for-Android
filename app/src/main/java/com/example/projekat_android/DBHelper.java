@@ -233,4 +233,9 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.insert("kupljen", null, contentValues);
 
     }
+
+    public void deletePurchase(int id){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.delete("kupljen", "id = ?", new String[] {String.valueOf(id)});
+    }
 }

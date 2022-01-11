@@ -32,12 +32,16 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
         TextView rowartikal;
         TextView rowkolicina;
         TextView rowukupnaCena;
+        TextView obrisiArtikal;
+        TextView totalSize;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rowartikal = itemView.findViewById(R.id.itemArtikal);
             rowkolicina = itemView.findViewById(R.id.ItemKolicina);
             rowukupnaCena = itemView.findViewById(R.id.itemUkupnaCena);
+            obrisiArtikal = itemView.findViewById(R.id.deletePurchase);
+            totalSize = itemView.findViewById(R.id.totalSize);
         }
     }
 
@@ -58,12 +62,21 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Kupljen kupljen = artikalList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final Kupljen kupljen = artikalList.get(position);
         DB = new DBHelper(context);
         holder.rowartikal.setText("Item name: " + kupljen.getArtikal());
         holder.rowkolicina.setText(String.valueOf("Quantity: "+kupljen.getKolicina()));
         holder.rowukupnaCena.setText(String.valueOf("Total price: "+kupljen.getUkupna_cena()));
+        holder.totalSize.setText("Total number of bought items: " +artikalList.size());
+        holder.obrisiArtikal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DB.deletePurchase(kupljen.getId());
+                artikalList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
