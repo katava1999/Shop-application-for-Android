@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     DBHelper DB;
     private SharedPreferenceConfig sharedPreferenceConfig;
     TextView greska;
+    TextView fillFields;
     private SharedPreferences sharedpreferences;
 
     @Override
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         user = findViewById(R.id.inputUsername);
         pass = findViewById(R.id.inputPass);
         greska = findViewById(R.id.prikazGreske);
+        fillFields = findViewById(R.id.fillAllFields);
 
         user.addTextChangedListener(loginTextWather);
         pass.addTextChangedListener(loginTextWather);
@@ -67,7 +69,13 @@ public class LoginActivity extends AppCompatActivity {
                 String password = pass.getText().toString();
 
                 if (username.equals("")||password.equals("")){
-                    Toast.makeText(LoginActivity.this, "Fill all fields", Toast.LENGTH_SHORT).show();
+                    Animation anim = new AlphaAnimation(0.0f, 1.0f);
+                    anim.setDuration(500);
+                    anim.setStartOffset(20);
+                    anim.setRepeatMode(Animation.REVERSE);
+                    anim.setRepeatCount(3);
+                    fillFields.startAnimation(anim);
+                    fillFields.setText("Fill all fields");
                 }
                 else {
 
