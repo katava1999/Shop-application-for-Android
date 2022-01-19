@@ -41,7 +41,6 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
             rowkolicina = itemView.findViewById(R.id.ItemKolicina);
             rowukupnaCena = itemView.findViewById(R.id.itemUkupnaCena);
             obrisiArtikal = itemView.findViewById(R.id.deletePurchase);
-            totalSize = itemView.findViewById(R.id.totalSize);
         }
     }
 
@@ -68,7 +67,6 @@ public class ArtikalPrikazAdapter extends RecyclerView.Adapter<ArtikalPrikazAdap
         holder.rowartikal.setText("Item name: " + kupljen.getArtikal());
         holder.rowkolicina.setText(String.valueOf("Quantity: "+kupljen.getKolicina()));
         holder.rowukupnaCena.setText(String.valueOf("Total price: "+kupljen.getUkupna_cena()));
-        holder.totalSize.setText("Total number of bought items: " +artikalList.size());
         holder.obrisiArtikal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
